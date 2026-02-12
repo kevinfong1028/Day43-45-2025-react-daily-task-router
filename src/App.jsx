@@ -1,14 +1,49 @@
 import "./App.css";
-import { HashRouter, NavLink, Routes, Route } from "react-router-dom";
+import {
+    HashRouter,
+    NavLink,
+    Routes,
+    Route,
+    useNavigate,
+    useLocation,
+} from "react-router-dom";
 // import Login from "./pages";
 // import Register from "./pages";
 // import Todo from "./pages";
 
+const LogOutBtn = () => {
+    const navigator = useNavigate();
+    return (
+        <button
+            type="button"
+            onClick={()=>{navigator("/login", {
+                replace: true,
+                state: {
+                    message: "你被登出囉~",
+                },
+            })}}
+        >
+            logout
+        </button>
+    );
+};
+
 const Todo = () => {
-    return <p>這是 Todo 頁面</p>;
+    return (
+        <>
+            <p>這是 Todo 頁面</p>
+            <LogOutBtn />
+        </>
+    );
 };
 const Login = () => {
-    return <p>這是登入頁面</p>;
+    const { state } = useLocation();
+    return (
+        <>
+            <p>這是登入頁面</p>
+            {state ? <p>{state.message}</p> : ""}
+        </>
+    );
 };
 const Register = () => {
     return <p>這是註冊頁面</p>;
