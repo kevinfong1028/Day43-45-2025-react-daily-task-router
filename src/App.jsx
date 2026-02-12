@@ -38,6 +38,7 @@ function App() {
                     <Route path="/register" element={<Register />}></Route>
                     <Route path="/login" element={<Login />}></Route>
                     <Route path="/todo" element={<Todo />}></Route>
+                    <Route path="*" element={<h1>404</h1>}></Route>
                 </Routes>
                 {/* 練習區 */}
             </HashRouter>
