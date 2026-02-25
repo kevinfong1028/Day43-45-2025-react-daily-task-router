@@ -6,6 +6,8 @@ import {
     Route,
     useNavigate,
     useLocation,
+    useParams,
+    Outlet,
 } from "react-router-dom";
 // import Login from "./pages";
 // import Register from "./pages";
@@ -16,12 +18,14 @@ const LogOutBtn = () => {
     return (
         <button
             type="button"
-            onClick={()=>{navigator("/login", {
-                replace: true,
-                state: {
-                    message: "你被登出囉~",
-                },
-            })}}
+            onClick={() => {
+                navigator("/login", {
+                    replace: true,
+                    state: {
+                        message: "你被登出囉~",
+                    },
+                });
+            }}
         >
             logout
         </button>
@@ -49,6 +53,22 @@ const Register = () => {
     return <p>這是註冊頁面</p>;
 };
 
+const PostDetail = () => {
+    const params = useParams();
+    console.log("params", params);
+    // return <p>這是 Post Detail: Id是</p>;
+    return <p>這是 Post Detail: Id是 {params.id}</p>;
+};
+
+const Posts = () => {
+    return (
+        <>
+            <p>這是 Posts 頁面</p>
+            <Outlet />
+        </>
+    );
+};
+
 function App() {
     return (
         <div className="container">
@@ -66,13 +86,26 @@ function App() {
                     <NavLink to="/todo">
                         <p>Todo 頁面</p>
                     </NavLink>
+                    <NavLink to="/posts">
+                        <p>Posts 頁面</p>
+                    </NavLink>
+                    <NavLink to="/posts/123">
+                        <p>Posts 詳細頁面123</p>
+                    </NavLink>
+                    <NavLink to="/posts/456">
+                        <p>Posts 詳細頁面456</p>
+                    </NavLink>
                 </div>
                 {/* Routes, Route 練習區 */}
                 <Routes>
                     <Route path="/" element={<h1>首頁</h1>}></Route>
-                    <Route path="/register" element={<Register />}></Route>
-                    <Route path="/login" element={<Login />}></Route>
-                    <Route path="/todo" element={<Todo />}></Route>
+                    <Route path="register" element={<Register />}></Route>
+                    <Route path="login" element={<Login />}></Route>
+                    <Route path="todo" element={<Todo />}></Route>
+                    <Route path="posts" element={<Posts />}>
+                        <Route index element={<p>Posts 首頁</p>}></Route>
+                        <Route path=":id" element={<PostDetail />}></Route>
+                    </Route>
                     <Route path="*" element={<h1>404</h1>}></Route>
                 </Routes>
                 {/* 練習區 */}
